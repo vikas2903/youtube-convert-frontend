@@ -8,7 +8,10 @@ function Home() {
   const [downloadUrl, setDownloadUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-console.log(format);
+
+  // ✅ Correct backend URL for Railway deployment
+  const BACKEND_URL = "https://youtube-converter-backend-production.up.railway.app";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -16,9 +19,10 @@ console.log(format);
     setDownloadUrl(null);
 
     try {
-      const response = await axios.get(
-        `http://localhost:7000/download?url=${url}&format=${format}`
-      );
+      // ✅ Updated API request to use the correct backend URL
+      const response = await axios.get(`${BACKEND_URL}/download`, {
+        params: { url, format },
+      });
 
       if (response.data.success) {
         setDownloadUrl(response.data.downloadLink);
@@ -42,7 +46,12 @@ console.log(format);
             <div style={{ textAlign: "center" }}>
               <p>
                 Download Link:{" "}
-                <a href={downloadUrl} target="_blank" rel="noopener noreferrer" className="download-btn">
+                <a
+                  href={downloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="download-btn"
+                >
                   Download
                 </a>
               </p>
@@ -63,7 +72,7 @@ console.log(format);
                   onChange={(e) => setUrl(e.target.value)}
                 />
                 <div className="button-wrapper">
-                  <button type="button" onClick={handleSubmit}>
+                  <button type="button" onClick={() => setFormat("mp3")}>
                     MP3
                   </button>
                   <button type="submit">Convert</button>
