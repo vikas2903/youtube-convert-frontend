@@ -9,7 +9,7 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // ✅ Correct backend URL for Railway deployment
+
   const BACKEND_URL = "https://youtube-converter-backend-production.up.railway.app";
 
   const handleSubmit = async (e) => {
@@ -19,7 +19,7 @@ function Home() {
     setDownloadUrl(null);
 
     try {
-      // ✅ Updated API request to use the correct backend URL
+
       const response = await axios.get(`${BACKEND_URL}/download`, {
         params: { url, format },
       });
