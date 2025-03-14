@@ -44,13 +44,19 @@ form {
   margin: 0 auto;
   padding: 20px;
 }
-form div:nth-of-type(1) {
+/* form div:nth-of-type(1) {
   color: #363636;
   line-height: 16px;
   text-overflow: ellipsis;
   white-space: nowrap;
   height: 16px;
   overflow: hidden;
+} */
+.modell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 form div:nth-of-type(2) {
   margin-top: 20px;
@@ -78,7 +84,7 @@ form button {
   background-color: #121212;
   font-size: 14px;
   border: none;
-  margin-right: 20px;
+  margin-right: 5px;
   padding: 0 10px;
   appearance: none;
   cursor: pointer;
@@ -89,7 +95,7 @@ form input {
   height: 48px;
   border-radius: 6px;
 }
-form button[type="submit"] {
+/* form button[type="submit"] {
   font-weight: normal;
   width: 12.5%;
   border-left: 1px #ffffff solid;
@@ -97,6 +103,11 @@ form button[type="submit"] {
   border-bottom-left-radius: 0px;
   padding: 0;
   box-sizing: border-box;
+} */
+.button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .content {
   max-width: 650px;
@@ -177,5 +188,7 @@ form button[type="submit"] {
   .content h6,
   .text h6 {
     font-size: 20px;
+
+
   }
 }
