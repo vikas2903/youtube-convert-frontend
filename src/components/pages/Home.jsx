@@ -9,7 +9,7 @@ function Home() {
   const [error, setError] = useState(null);
 
   // Backend API URL (Update if deployed)
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = "https://youtube-converter-backend-cu2n.onrender.com/";
 
   const handleSubmit = async (e) => {
     console.log("🔹 Submitting URL:", url);
