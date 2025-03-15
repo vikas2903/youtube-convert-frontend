@@ -8,22 +8,22 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Backend API URL (Update if deployed)
-  const BACKEND_URL = "http://localhost:5000";
+  // Backend API URL
+  const BACKEND_URL = "https://youtube-converter-backend-cu2n.onrender.com";
 
   const handleSubmit = async (e) => {
-    console.log("🔹 Submitting URL:", url);
     e.preventDefault();
     setLoading(true);
     setError(null);
     setDownloadUrl(null);
 
-    // Trim spaces & encode the URL properly
     const cleanedUrl = url.trim();
+
+    console.log("🔹 Processing URL:", cleanedUrl);
 
     try {
       const response = await axios.get(`${BACKEND_URL}/convert`, {
-        params: { url: cleanedUrl }, // Use cleaned URL
+        params: { url: cleanedUrl },
       });
 
       if (response.data.downloadUrl) {
@@ -33,7 +33,14 @@ function Home() {
       }
     } catch (error) {
       console.error("API Error:", error);
-      setError("Failed to process video. Please try again.");
+
+      if (error.response?.status === 429) {
+        setError(
+          "YouTube is limiting downloads (Error 429). Please wait and try again."
+        );
+      } else {
+        setError("Failed to process video. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -43,18 +50,18 @@ function Home() {
     <div>
       <form autoComplete="off" onSubmit={handleSubmit}>
         {loading ? (
-          <p style={{ textAlign: "center" }}>Initializing conversion...</p>
+          <p style={{ textAlign: "center" }}>Processing, please wait...</p>
         ) : downloadUrl ? (
           <div style={{ textAlign: "center" }}>
             <p>
-              Download Link: {" "}
+              Download Link:{" "}
               <a
                 href={downloadUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="download-btn"
               >
-                Download
+                Download MP3
               </a>
             </p>
           </div>
@@ -84,16 +91,26 @@ function Home() {
       <div className="content">
         <h4>YouTube to MP3 Converter</h4>
         <p>
-          Our YouTube to MP3 Converter allows you to convert your favorite
-          YouTube videos to MP3 (audio) or MP4 (video) files and download them
-          for FREE. {" "}
+          Convert YouTube videos to MP3 (audio) and download them instantly for
+          free.{" "}
           <Link to="/">
             <b>Y2Mate</b>
           </Link>{" "}
-          works on your desktop, tablet, and mobile device without the
-          installation of any additional apps. The usage of Y2Mate is free and
-          safe!
+          works on all devices without requiring additional apps.
         </p>
+
+        <h6>How to download YouTube videos?</h6>
+        <p>
+          1. Copy the YouTube video URL from your browser (youtube.com/watch?v=...).
+        </p>
+        <p>
+          2. Paste the URL into our converter and choose MP3 format, then click
+          "Convert."
+        </p>
+        <p>
+          3. Once the conversion completes, click the "Download" button.
+        </p>
+        <p>Note: Maximum supported video length is 60 minutes.</p>
       </div>
     </div>
   );
