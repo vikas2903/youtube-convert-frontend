@@ -178,10 +178,10 @@ form input {
   form #format {
     width: 12.928571428571429%;
   }
-  form button[type="submit"] {
+  /* form button[type="submit"] {
     width: 18.5%;
     margin-right: 0;
-  }
+  } */
   input::placeholder {
     font-size: 0.82rem;
   }
