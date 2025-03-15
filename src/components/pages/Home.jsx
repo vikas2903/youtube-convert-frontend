@@ -9,7 +9,7 @@ function Home() {
   const [error, setError] = useState(null);
 
   // Backend API URL
-  const BACKEND_URL = "https://youtube-converter-backend-cu2n.onrender.com";
+  const BACKEND_URL = "https://youtube-converter-backend-2wvy.onrender.com";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +25,8 @@ function Home() {
       const response = await axios.get(`${BACKEND_URL}/convert`, {
         params: { url: cleanedUrl },
       });
+      console.log(url)
+      console.log("🔹 API Response:", response.data);
 
       if (response.data.downloadUrl) {
         setDownloadUrl(response.data.downloadUrl);
