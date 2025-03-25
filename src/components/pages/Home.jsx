@@ -8,8 +8,9 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Backend API URL
-  const BACKEND_URL = "https://youtube-converter-backend-2wvy.onrender.com";
+  // Backend API URL https://powerful-goofy-ketchup.glitch.me/
+  // const BACKEND_URL = "https://youtube-converter-backend-2wvy.onrender.com";
+   const BACKEND_URL = "https://powerful-goofy-ketchup.glitch.me/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -113,6 +114,7 @@ function Home() {
           3. Once the conversion completes, click the "Download" button.
         </p>
         <p>Note: Maximum supported video length is 60 minutes.</p>
+        <a href ="https://vikasprasad.in.net">Vikas Prasad</a>
       </div>
     </div>
   );
