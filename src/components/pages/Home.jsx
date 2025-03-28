@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -8,8 +8,19 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Updated Backend URL
-  const BACKEND_URL = "https://youtube-backend-01.onrender.com/";
+  const BACKEND_URL = "https://youtube-backend-01.onrender.com";
+
+  // Autofocus input on component mount
+  useEffect(() => {
+    document.getElementById("video").focus();
+  }, []);
+
+  // YouTube URL Validation (Basic Check)
+  const isValidYouTubeUrl = (url) => {
+    const youtubeRegex =
+      /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=)?[A-Za-z0-9_-]{11}/;
+    return youtubeRegex.test(url);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +29,14 @@ function Home() {
     setDownloadUrl(null);
 
     const cleanedUrl = url.trim();
-
     console.log("🔹 Processing URL:", cleanedUrl);
+
+    // Validate YouTube URL
+    if (!isValidYouTubeUrl(cleanedUrl)) {
+      setError("Invalid YouTube URL. Please enter a valid URL.");
+      setLoading(false);
+      return;
+    }
 
     try {
       const response = await axios.get(`${BACKEND_URL}/convert`, {
@@ -34,16 +51,25 @@ function Home() {
         setError("Error: Unable to process the video.");
       }
     } catch (error) {
-      console.error("API Error:", error);
+      console.error("❌ API Error:", error);
 
-      if (error.response?.status === 429) {
-        setError(
-          "YouTube is limiting downloads (Error 429). Please wait and try again."
-        );
-      } else if (error.response?.status === 400) {
-        setError("Invalid YouTube URL. Please enter a valid URL.");
+      if (error.response) {
+        // Handle specific API errors
+        switch (error.response.status) {
+          case 429:
+            setError(
+              "YouTube is limiting downloads (Error 429). Please wait and try again."
+            );
+            break;
+          case 400:
+            setError("Invalid YouTube URL. Please enter a valid URL.");
+            break;
+          default:
+            setError("Failed to process video. Please try again later.");
+        }
       } else {
-        setError("Failed to process video. Please try again.");
+        // Handle Network Errors
+        setError("Network error. Please check your connection and try again.");
       }
     } finally {
       setLoading(false);
@@ -54,11 +80,11 @@ function Home() {
     <div>
       <form autoComplete="off" onSubmit={handleSubmit}>
         {loading ? (
-          <p style={{ textAlign: "center" }}>Processing, please wait...</p>
+          <p style={{ textAlign: "center" }}>🔄 Processing, please wait...</p>
         ) : downloadUrl ? (
           <div style={{ textAlign: "center" }}>
             <p>
-              Download Link: {" "}
+              ✅ Download Link:{" "}
               <a
                 href={downloadUrl}
                 target="_blank"
@@ -71,7 +97,7 @@ function Home() {
           </div>
         ) : (
           <>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p style={{ color: "red" }}>❌ {error}</p>}
 
             <label htmlFor="video">Insert a YouTube video URL</label>
 
@@ -94,14 +120,14 @@ function Home() {
       </form>
 
       <div className="content">
-        <h4>YouTube to MP3 Converter</h4>
+        <h4>🎵 YouTube to MP3 Converter</h4>
         <p>
           Convert YouTube videos to MP3 (audio) and download them instantly for
           free. <Link to="/">Y2Mate</Link> works on all devices without requiring
           additional apps.
         </p>
 
-        <h6>How to download YouTube videos?</h6>
+        <h6>📥 How to download YouTube videos?</h6>
         <p>1. Copy the YouTube video URL from your browser.</p>
         <p>2. Paste the URL into our converter and click "Convert." </p>
         <p>3. Click the "Download" button once the conversion is complete.</p>
@@ -115,3 +141,4 @@ function Home() {
 }
 
 export default Home;
+ 
