@@ -9,7 +9,7 @@ function Home() {
   const [error, setError] = useState(null);
 
   // Updated Backend URL
-  const BACKEND_URL = "https://youtube-backend-01.onrender.com";
+  const BACKEND_URL = "https://youtube-backend-01.onrender.com/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
