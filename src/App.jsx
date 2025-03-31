@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/pages/Home.jsx";
+import Home2 from "./components/pages/Home2.jsx";
 import Faq from "./components/pages/Faq";
 import Changelog from "./components/pages/Changelog";
 import Header from "./Header.jsx";
@@ -12,7 +13,9 @@ function App() {
     <>
     <Header/>
       <Routes>
-        <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home2/>} />
+
+
         <Route path="/faq" element={<Faq />} />
         <Route path="/changelog" element={<Changelog />} />
       </Routes>
