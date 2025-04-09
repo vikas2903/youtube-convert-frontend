@@ -6,7 +6,7 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   // const BACKEND_URL = "https://youtube-backend-01.onrender.com";
-  const BACKEND_URL = "https://youtube-backend-01.onrender.com";
+  const BACKEND_URL = "https://youtube-backend-01.onrender.com"; 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -17,6 +17,7 @@ function Home() {
     try {
       const response = await fetch(`${BACKEND_URL}/convert?url=${url}`, {
         method: "GET",
+        
       });
 
       if (!response.ok) {
