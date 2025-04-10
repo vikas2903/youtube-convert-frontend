@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Content from "../../Content";
 
 function Home() {
   const [url, setUrl] = useState("");
@@ -68,6 +69,8 @@ function Home() {
           </p>
         </div>
       )}
+
+      < Content />
     </div>
   );
 } 
